@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Leadership: Models of Leadership — Assignment Workflow Chart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --secondary: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --accent-1: #0d9488;
+      --accent-1-bg: #f0fdfa;
+      --accent-2: #d97706;
+      --accent-2-bg: #fffbeb;
+      --accent-3: #7c3aed;
+      --accent-3-bg: #f5f3ff;
+      --deadline-bg: #fef2f2;
+      --deadline-text: #dc2626;
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--secondary);
+      line-height: 1.5;
+      padding: 32px 20px 60px;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      background: var(--surface);
+      padding: 28px 32px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .title-group {
+      max-width: 680px;
+    }
+
+    .title-group h1 {
+      font-size: 23px;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .title-group p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .deadline-badge {
+      background: var(--deadline-bg);
+      color: var(--deadline-text);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 13.5px;
+      border: 1px solid #fecaca;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .print-btn {
+      background: var(--surface);
+      color: var(--secondary);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .print-btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    /* Interactive Toolbar: Filter & Progress */
+    .toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-label {
+      font-size: 12.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+
+    .filter-btn {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid transparent;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn:hover {
+      background: #e2e8f0;
+      color: var(--secondary);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .progress-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 220px;
+    }
+
+    .progress-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--secondary);
+      white-space: nowrap;
+    }
+
+    .progress-bar-bg {
+      flex: 1;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      min-width: 100px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--success);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    /* Section Headings */
+    .section-heading {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 28px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Team Responsibility Matrix */
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .matrix-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .matrix-card.dimmed {
+      opacity: 0.35;
+    }
+
+    .matrix-card.team-1 { border-top: 4px solid var(--accent-1); }
+    .matrix-card.team-2 { border-top: 4px solid var(--accent-2); }
+    .matrix-card.team-3 { border-top: 4px solid var(--accent-3); }
+    .matrix-card.lead-card { border-top: 4px solid var(--primary); background: #f8faff; }
+
+    .matrix-badge {
+      display: inline-block;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 9px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .team-1 .matrix-badge { background: var(--accent-1-bg); color: var(--accent-1); }
+    .team-2 .matrix-badge { background: var(--accent-2-bg); color: var(--accent-2); }
+    .team-3 .matrix-badge { background: var(--accent-3-bg); color: var(--accent-3); }
+    .lead-card .matrix-badge { background: var(--primary-light); color: var(--primary); }
+
+    .matrix-members {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 6px;
+    }
+
+    .matrix-role {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+
+    .matrix-list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .matrix-list li::before {
+      content: "• ";
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    /* Workflow Vertical Timeline */
+    .workflow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 26px;
+      width: 100%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .step-card:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+
+    .step-card.dimmed {
+      opacity: 0.35;
+    }
+
+    .step-card.completed {
+      border-color: #bbf7d0;
+      background: #fcfffd;
+    }
+
+    .step-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    /* Interactive Checklist Checkbox */
+    .stage-check {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+      background: #fff;
+    }
+
+    .stage-check:hover {
+      border-color: var(--primary);
+    }
+
+    .stage-check:checked {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .stage-check:checked::after {
+      content: "✓";
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .phase-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+
+    .step-card.completed .phase-badge {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .step-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .step-card.completed .step-title {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .owner-tag {
+      margin-left: auto;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+    }
+
+    .step-desc {
+      color: #334155;
+      font-size: 14.5px;
+      padding-left: 34px;
+    }
+
+    /* Connector Arrow */
+    .connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 34px;
+      justify-content: center;
+    }
+
+    .connector-line {
+      width: 2px;
+      height: 22px;
+      background: #cbd5e1;
+    }
+
+    .connector-arrow {
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 8px solid #94a3b8;
+    }
+
+    /* Subgroup Grid inside Stage 2 */
+    .subgroup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+      padding-left: 34px;
+    }
+
+    .group-box {
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid transparent;
+      transition: opacity 0.2s ease;
+    }
+
+    .group-box.dimmed {
+      opacity: 0.35;
+    }
+
+    .group-1 { background: var(--accent-1-bg); border-color: #99f6e4; }
+    .group-2 { background: var(--accent-2-bg); border-color: #fde68a; }
+    .group-3 { background: var(--accent-3-bg); border-color: #ddd6fe; }
+
+    .group-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .group-1 .group-label { color: var(--accent-1); }
+    .group-2 .group-label { color: var(--accent-2); }
+    .group-3 .group-label { color: var(--accent-3); }
+
+    .members {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: var(--secondary);
+    }
+
+    .task-detail {
+      font-size: 13px;
+      color: #475569;
+    }
+
+    /* Final Step Highlight */
+    .step-final {
+      border: 2px solid var(--primary);
+      background: linear-gradient(to right, #ffffff, #f8fafc);
+    }
+
+    @media (max-width: 640px) {
+      .owner-tag {
+        margin-left: 34px;
+      }
+      .header-actions {
+        align-items: flex-start;
+      }
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .toolbar, .print-btn, .stage-check { display: none !important; }
+      .step-card, .matrix-card, header {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+      .step-card.dimmed, .matrix-card.dimmed, .group-box.dimmed {
+        opacity: 1 !important;
+      }
+      .step-desc, .subgroup-grid {
+        padding-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="title-group">
+        <h1>Digital Leadership: Models of Leadership — Assignment Workflow Chart</h1>
+        <p>Presentation on Digital Leadership: Distinguish the models of leadership, their strengths, criticisms, and application</p>
+      </div>
+      <div class="header-actions">
+        <div class="deadline-badge">
+          <span>📅 Final Presentation & Submission: 11/1/2027</span>
+        </div>
+        <button class="print-btn" onclick="window.print()" title="Print or Save as PDF">
+          🖨️ Print / Save PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- Interactive Filter & Progress Bar -->
+    <div class="toolbar">
+      <div class="filter-group" id="filterGroup">
+        <span class="filter-label">Filter by Team / Member:</span>
+        <button class="filter-btn active" data-filter="all">All (6)</button>
+        <button class="filter-btn" data-filter="team1">Team 1 (Asya & Fateh)</button>
+        <button class="filter-btn" data-filter="team2">Team 2 (Fikriyah & Nizam)</button>
+        <button class="filter-btn" data-filter="team3">Team 3 (Syazda & Zakirajailani)</button>
+        <button class="filter-btn" data-filter="nizam">Nizam (Coordinator)</button>
+      </div>
+      <div class="progress-box">
+        <span class="progress-text" id="progressText">0 / 7 Stages Done</span>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Matrix / Responsibility Cards -->
+    <div class="section-heading">👥 Team Matrix & Core Responsibilities</div>
+    <div class="matrix-grid">
+      <div class="matrix-card team-1" data-tags="all team1">
+        <div>
+          <span class="matrix-badge">Team 1 • Pair A</span>
+          <div class="matrix-members">Asya & Fateh</div>
+          <div class="matrix-role">Models of Leadership & Strengths</div>
+        </div>
+        <ul class="matrix-list">
+          <li>Distinguish & define core digital leadership models</li>
+          <li>Analyze key advantages & strengths per model</li>
+          <li>Draft Padlet full doc & bite-sized Canva slides</li>
+        </ul>
+      </div>
+
+      <div class="matrix-card team-2" data-tags="all team2 nizam">
+        <div>
+          <span class="matrix-badge">Team 2 • Pair B</span>
+          <div class="matrix-members">Fikriyah & Nizam</div>
+          <div class="matrix-role">Criticisms & Limitations</div>
+        </div>
+        <ul class="matrix-list">
+          <li>Evaluate drawbacks, blind spots & scholarly critiques</li>
+          <li>Compare model constraints in digital workplaces</li>
+          <li>Draft Padlet full doc & bite-sized Canva slides</li>
+        </ul>
+      </div>
+
+      <div class="matrix-card team-3" data-tags="all team3">
+        <div>
+          <span class="matrix-badge">Team 3 • Pair C</span>
+          <div class="matrix-members">Syazda & Zakirajailani</div>
+          <div class="matrix-role">Real-World Application & Cases</div>
+        </div>
+        <ul class="matrix-list">
+          <li>Source real-world organizational case examples</li>
+          <li>Demonstrate practical digital leadership execution</li>
+          <li>Draft Padlet full doc & bite-sized Canva slides</li>
+        </ul>
+      </div>
+
+      <div class="matrix-card lead-card" data-tags="all team2 nizam">
+        <div>
+          <span class="matrix-badge">Technical Coordinator</span>
+          <div class="matrix-members">Nizam</div>
+          <div class="matrix-role">Canva Deck & Appendix Hyperlinks</div>
+        </div>
+        <ul class="matrix-list">
+          <li>Create master Canva deck & share Editor auth link</li>
+          <li>Link Canva slides to Padlet columns as shortcuts</li>
+          <li>Verify appendix navigation before final rehearsal</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Visual 7-Stage Workflow Diagram -->
+    <div class="section-heading">🔄 7-Stage Execution Workflow (Click checkboxes to track progress)</div>
+    <div class="workflow">
+
+      <!-- Stage 1 -->
+      <div class="step-card" data-stage="1" data-tags="all team1 team2 team3 nizam">
+        <div class="step-header">
+          <input type="checkbox" class="stage-check" aria-label="Mark Stage 1 complete">
+          <span class="phase-badge">Stage 1</span>
+          <div class="step-title">Lecturer Confirmation</div>
+          <span class="owner-tag">All Members</span>
+        </div>
+        <div class="step-desc">
+          Confirm assignment handout, grading rubric, and expectations with the lecturer (including which specific Digital Leadership models must be distinguished).
+        </div>
+      </div>
+
+      <div class="connector"><div class="connector-line"></div><div class="connector-arrow"></div></div>
+
+      <!-- Stage 2 -->
+      <div class="step-card" data-stage="2" data-tags="all team1 team2 team3 nizam">
+        <div class="step-header">
+          <input type="checkbox" class="stage-check" aria-label="Mark Stage 2 complete">
+          <span class="phase-badge">Stage 2</span>
+          <div class="step-title">Task Assignment & Subgroup Split (2–2–2)</div>
+          <span class="owner-tag">All Members (6)</span>
+        </div>
+        <div class="step-desc">
+          Divide into three pairs covering core presentation sections across the chosen leadership models:
+        </div>
+        <div class="subgroup-grid">
+          <div class="group-box group-1" data-tags="all team1">
+            <div class="group-label">Team 1</div>
+            <div class="members">Asya & Fateh</div>
+            <div class="task-detail">Models of Leadership & Strengths — define each model and highlight its core advantages.</div>
+          </div>
+          <div class="group-box group-2" data-tags="all team2 nizam">
+            <div class="group-label">Team 2</div>
+            <div class="members">Fikriyah & Nizam</div>
+            <div class="task-detail">Criticisms & Limitations — analyze weaknesses and critiques (plus Nizam's Canva setup & hyperlink coordination).</div>
+          </div>
+          <div class="group-box group-3" data-tags="all team3">
+            <div class="group-label">Team 3</div>
+            <div class="members">Syazda & Zakirajailani</div>
+            <div class="task-detail">Real-World Application & Case Examples — illustrate practical industry usage and case studies.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="connector"><div class="connector-line"></div><div class="connector-arrow"></div></div>
+
+      <!-- Stage 3 -->
+      <div class="step-card" data-stage="3" data-tags="all team2 nizam">
+        <div class="step-header">
+          <input type="checkbox" class="stage-check" aria-label="Mark Stage 3 complete">
+          <span class="phase-badge">Stage 3</span>
+          <div class="step-title">Canva Deck Setup</div>
+          <span class="owner-tag">Owner: Nizam</span>
+        </div>
+        <div class="step-desc">
+          Nizam creates the master Canva Slide Deck with standardized templates and distributes the <strong>Editor authentication link</strong> to all teammates.
+        </div>
+      </div>
+
+      <div class="connector"><div class="connector-line"></div><div class="connector-arrow"></div></div>
+
+      <!-- Stage 4 -->
+      <div class="step-card" data-stage="4" data-tags="all team1 team2 team3 nizam">
+        <div class="step-header">
+          <input type="checkbox" class="stage-check" aria-label="Mark Stage 4 complete">
+          <span class="phase-badge">Stage 4</span>
+          <div class="step-title">Padlet Research & Document Layout</div>
+          <span class="owner-tag">Owners: Team 1, Team 2, Team 3</span>
+        </div>
+        <div class="step-desc">
+          Each team gathers academic and credible sources, then writes a structured full-text document with references under their respective column in <strong>Padlet</strong>.
+        </div>
+      </div>
+
+      <div class="connector"><div class="connector-line"></div><div class="connector-arrow"></div></div>
+
+      <!-- Stage 5 -->
+      <div class="step-card" data-stage="5" data-tags="all team1 team2 team3 nizam">
+        <div class="step-header">
+          <input type="checkbox" class="stage-check" aria-label="Mark Stage 5 complete">
+          <span class="phase-badge">Stage 5</span>
+          <div class="step-title">Dechunking & Slide Creation</div>
+          <span class="owner-tag">Owners: Team 1, Team 2, Team 3</span>
+        </div>
+        <div class="step-desc">
+          Teammates distill (<strong>"dechunk" / bite-size</strong>) their full Padlet documents into clean, scannable, visual slides in their assigned section of the shared Canva deck.
+        </div>
+      </div>
+
+      <div class="connector"><div class="connector-line"></div><div class="connector-arrow"></div></div>
+
+      <!-- Stage 6 -->
+      <div class="step-card" data-stage="6" data-tags="all team2 nizam">
+        <div class="step-header">
+          <input type="checkbox" class="stage-check" aria-label="Mark Stage 6 complete">
+          <span class="phase-badge">Stage 6</span>
+          <div class="step-title">Hyperlink Integration (Appendix Shortcuts)</div>
+          <span class="owner-tag">Owner: Nizam</span>
+        </div>
+        <div class="step-desc">
+          Nizam adds interactive hyperlinks on the Canva slides pointing directly to each Padlet document/column as an <strong>appendix / full-resource shortcut</strong> for quick lookup during Q&A.
+        </div>
+      </div>
+
+      <div class="connector"><div class="connector-line"></div><div class="connector-arrow"></div></div>
+
+      <!-- Stage 7 -->
+      <div class="step-card step-final" data-stage="7" data-tags="all team1 team2 team3 nizam">
+        <div class="step-header">
+          <input type="checkbox" class="stage-check" aria-label="Mark Stage 7 complete">
+          <span class="phase-badge">Stage 7</span>
+          <div class="step-title">Final Review, Submission & Presentation</div>
+          <span class="owner-tag">All Members • 11/1/2027</span>
+        </div>
+        <div class="step-desc">
+          Full team rehearsal, visual & hyperlink polish, final submission, and live presentation on <strong>11 January 2027 (11/1/2027)</strong>.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Interactive Team/Member Filter Logic
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const filterableItems = document.querySelectorAll('[data-tags]');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const selected = btn.getAttribute('data-filter');
+        filterableItems.forEach(item => {
+          const tags = item.getAttribute('data-tags').split(' ');
+          if (selected === 'all' || tags.includes(selected)) {
+            item.classList.remove('dimmed');
+          } else {
+            item.classList.add('dimmed');
+          }
+        });
+      });
+    });
+
+    // Interactive Stage Progress Checklist (with localStorage persistence)
+    const checkboxes = document.querySelectorAll('.stage-check');
+    const progressText = document.getElementById('progressText');
+    const progressFill = document.getElementById('progressFill');
+    const STORAGE_KEY = 'digital_leadership_workflow_v1';
+
+    function loadProgress() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        checkboxes.forEach(cb => {
+          const card = cb.closest('.step-card');
+          const stageId = card.getAttribute('data-stage');
+          if (saved[stageId]) {
+            cb.checked = true;
+            card.classList.add('completed');
+          }
+        });
+      } catch (e) {
+        // Ignore storage errors in sandboxed iframes
+      }
+      updateProgressUI();
+    }
+
+    function updateProgressUI() {
+      const total = checkboxes.length;
+      const done = Array.from(checkboxes).filter(cb => cb.checked).length;
+      progressText.textContent = `${done} / ${total} Stages Done`;
+      progressFill.style.width = `${(done / total) * 100}%`;
+    }
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const card = cb.closest('.step-card');
+        card.classList.toggle('completed', cb.checked);
+        updateProgressUI();
+
+        try {
+          const state = {};
+          checkboxes.forEach(box => {
+            const id = box.closest('.step-card').getAttribute('data-stage');
+            state[id] = box.checked;
+          });
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          // Ignore storage errors
+        }
+      });
+    });
+
+    loadProgress();
+  </script>
+</body>
+</html>
